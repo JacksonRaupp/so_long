@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 05:50:05 by jraupp            #+#    #+#             */
-/*   Updated: 2023/12/14 13:03:02 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:16:46 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		check_rest(t_window *game);
 int		open_window(t_window *game);
 int		init_wall(t_window *game);
+int		init_collectible(t_window *game);
 int		init_player(t_window *game);
 int		init_exit(t_window *game);
 
@@ -70,6 +71,24 @@ int	init_wall(t_window *game)
 			IMG_SIZE * ZOOM,
 			IMG_SIZE * ZOOM
 			);
+	return (EXIT_SUCCESS);
+}
+
+int	init_collectible(t_window *game)
+{
+	game->collectible_texture = mlx_load_png
+		("textures/collectible.png");
+	if (!game->collectible_texture)
+		return (error(WARNING_8), EXIT_FAILURE);
+	game->collectible_image = mlx_texture_to_image
+		(game->mlx, game->collectible_texture);
+	if (!game->collectible_image)
+		return (error(WARNING_8), EXIT_FAILURE);
+	mlx_resize_image
+		(
+			game->wall_image,
+			IMG_SIZE * ZOOM,
+			IMG_SIZE * ZOOM);
 	return (EXIT_SUCCESS);
 }
 

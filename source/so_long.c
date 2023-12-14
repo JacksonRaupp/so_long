@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 01:12:34 by jackson           #+#    #+#             */
-/*   Updated: 2023/12/14 13:24:05 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:04:41 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	init_game(t_window *game, int argc, char **argv)
 	if (open_window(game))
 		return (EXIT_FAILURE);
 	if (init_wall(game))
+		return (EXIT_FAILURE);
+	if (init_collectible(game))
 		return (EXIT_FAILURE);
 	if (init_player(game))
 		return (EXIT_FAILURE);

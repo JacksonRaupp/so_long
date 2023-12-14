@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:06:22 by jraupp            #+#    #+#             */
-/*   Updated: 2023/12/14 13:23:42 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:12:38 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ typedef struct s_node
 	struct s_node	*east;
 	struct s_node	*nort;
 	struct s_node	*sout;
-	mlx_texture_t	*texture;
-	mlx_image_t		*image;
 }t_node;
 
 typedef struct s_object
@@ -64,6 +62,8 @@ typedef struct s_window
 	t_object		player;
 	mlx_image_t		*wall_image;
 	mlx_texture_t	*wall_texture;
+	mlx_image_t		*collectible_image;
+	mlx_texture_t	*collectible_texture;
 }t_window;
 
 size_t	ft_strlen(const char *str);
@@ -105,12 +105,13 @@ int		flood_fill_util(t_node *node);
 int		check_rest(t_window *game);
 int		open_window(t_window *game);
 int		init_wall(t_window *game);
+int		init_collectible(t_window *game);
 int		init_player(t_window *game);
 int		init_exit(t_window *game);
 
 int		put_map(t_window *game);
 void	put_wall(t_window *game);
-int		put_collectible(t_window *game);
+void		put_collectible(t_window *game);
 void	put_player(t_window *game);
 void	put_exit(t_window *game);
 
@@ -119,6 +120,7 @@ void	action_up(t_window *game);
 void	action_down(t_window *game);
 void	action_left(t_window *game);
 void	action_right(t_window *game);
+void	collect(t_window *game);
 
 void	exit_map(t_window *game);
 void	free_map(t_window *game);

@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 05:50:10 by jraupp            #+#    #+#             */
-/*   Updated: 2023/12/14 14:36:54 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:19:05 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	action_up(t_window *game);
 void	action_down(t_window *game);
 void	action_left(t_window *game);
 void	action_right(t_window *game);
+void	collect(t_window *game);
 
 void	keyhook(mlx_key_data_t keydata, void *param)
 {
@@ -50,14 +51,9 @@ void	action_up(t_window *game)
 	if (game->player.node.nort && game->player.node.nort->value != '1')
 	{
 		game->player.image->instances[0].y -= IMG_SIZE * ZOOM;
-		if (game->player.node.nort->value == 'C')
-		{
-			mlx_delete_image(game->mlx, game->player.node.nort->image);
-			mlx_delete_texture(game->player.node.nort->texture);
-			game->player.node.nort->value = '0';
-			game->collectible -= 1;
-		}
 		game->player.node = *game->player.node.nort;
+		if (game->player.node.nort->value == 'C')
+			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
 }
@@ -67,14 +63,9 @@ void	action_down(t_window *game)
 	if (game->player.node.sout && game->player.node.sout->value != '1')
 	{
 		game->player.image->instances[0].y += IMG_SIZE * ZOOM;
-		if (game->player.node.sout->value == 'C')
-		{
-			mlx_delete_image(game->mlx, game->player.node.sout->image);
-			mlx_delete_texture(game->player.node.sout->texture);
-			game->player.node.sout->value = '0';
-			game->collectible -= 1;
-		}
 		game->player.node = *game->player.node.sout;
+		if (game->player.node.sout->value == 'C')
+			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
 }
@@ -84,14 +75,9 @@ void	action_left(t_window *game)
 	if (game->player.node.west && game->player.node.west->value != '1')
 	{
 		game->player.image->instances[0].x -= IMG_SIZE * ZOOM;
-		if (game->player.node.west->value == 'C')
-		{
-			mlx_delete_image(game->mlx, game->player.node.west->image);
-			mlx_delete_texture(game->player.node.west->texture);
-			game->player.node.west->value = '0';
-			game->collectible -= 1;
-		}
 		game->player.node = *game->player.node.west;
+		if (game->player.node.west->value == 'C')
+			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
 }
@@ -101,14 +87,29 @@ void	action_right(t_window *game)
 	if (game->player.node.east && game->player.node.east->value != '1')
 	{
 		game->player.image->instances[0].x += IMG_SIZE * ZOOM;
+		game->player.node = *game->player.node.east;
 		if (game->player.node.east->value == 'C')
+			collect(game);
+		ft_printf("\nNumber of movements: %d", (game->movements += 1));
+	}
+}
+
+void	collect(t_window *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->collectible)
+	{
+		if (game->collectible_image->instances[i].x
+			/ (IMG_SIZE  * ZOOM) == game->player.node.xaxis
+			&& game->collectible_image->instances[i].y
+			/ (IMG_SIZE  * ZOOM) == game->player.node.yaxis)
 		{
-			mlx_delete_image(game->mlx, game->player.node.east->image);
-			mlx_delete_texture(game->player.node.east->texture);
-			game->player.node.east->value = '0';
+			game->collectible_image->instances[i].enabled = 0;
+			game->player.node.value = '0';
 			game->collectible -= 1;
 		}
-		game->player.node = *game->player.node.east;
-		ft_printf("\nNumber of movements: %d", (game->movements += 1));
+		i++;
 	}
 }
