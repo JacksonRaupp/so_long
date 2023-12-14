@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 05:50:10 by jraupp            #+#    #+#             */
-/*   Updated: 2023/12/14 17:19:05 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 18:03:40 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	action_up(t_window *game)
 	{
 		game->player.image->instances[0].y -= IMG_SIZE * ZOOM;
 		game->player.node = *game->player.node.nort;
-		if (game->player.node.nort->value == 'C')
+		if (game->player.node.value == 'C')
 			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
@@ -64,7 +64,7 @@ void	action_down(t_window *game)
 	{
 		game->player.image->instances[0].y += IMG_SIZE * ZOOM;
 		game->player.node = *game->player.node.sout;
-		if (game->player.node.sout->value == 'C')
+		if (game->player.node.value == 'C')
 			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
@@ -76,7 +76,7 @@ void	action_left(t_window *game)
 	{
 		game->player.image->instances[0].x -= IMG_SIZE * ZOOM;
 		game->player.node = *game->player.node.west;
-		if (game->player.node.west->value == 'C')
+		if (game->player.node.value == 'C')
 			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
@@ -88,7 +88,7 @@ void	action_right(t_window *game)
 	{
 		game->player.image->instances[0].x += IMG_SIZE * ZOOM;
 		game->player.node = *game->player.node.east;
-		if (game->player.node.east->value == 'C')
+		if (game->player.node.value == 'C')
 			collect(game);
 		ft_printf("\nNumber of movements: %d", (game->movements += 1));
 	}
@@ -109,6 +109,7 @@ void	collect(t_window *game)
 			game->collectible_image->instances[i].enabled = 0;
 			game->player.node.value = '0';
 			game->collectible -= 1;
+			break ;
 		}
 		i++;
 	}

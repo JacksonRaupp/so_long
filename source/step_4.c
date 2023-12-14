@@ -6,7 +6,7 @@
 /*   By: jraupp <jraupp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 05:50:05 by jraupp            #+#    #+#             */
-/*   Updated: 2023/12/14 17:16:46 by jraupp           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:35:34 by jraupp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	init_collectible(t_window *game)
 		return (error(WARNING_8), EXIT_FAILURE);
 	mlx_resize_image
 		(
-			game->wall_image,
+			game->collectible_image,
 			IMG_SIZE * ZOOM,
 			IMG_SIZE * ZOOM);
 	return (EXIT_SUCCESS);
